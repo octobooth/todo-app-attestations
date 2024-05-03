@@ -20,14 +20,12 @@ jobs:
         run: npm install
       - name: "Build site"
         run: npm run build
-      - name: "Deploy to GitHub Pages"
-        uses: actions/upload-pages-artifact@v3.0.1
-        with:
-          path: dist
+      - name: "Package the build"
+        run: tar -czf dist.tar.gz dist
       - name: Attest Build Provenance
         uses: actions/attest-build-provenance@v1
         with:
-          subject-path: "dist"
+          subject-path: "dist.tar.gz"
 
   # Deploy job
   # deploy:
