@@ -18,6 +18,14 @@ jobs:
         uses: actions/checkout@v4
       - name: "Install dependencies"
         run: npm install
+      - uses: anchore/sbom-action@v0
+        with:
+          format: 'spdx-json'
+          output-file: 'sbom.spdx.json'
+      - uses: actions/attest-sbom@v1
+        with:
+          subject-path: 'bin/my-artifact.tar.gz'
+          sbom-path: 'sbom.spdx.json'
       - name: "Build site"
         run: npm run build
       - name: "Package the build"
@@ -26,6 +34,17 @@ jobs:
         uses: actions/attest-build-provenance@v1
         with:
           subject-path: "dist.tar.gz"
+      - name: "Publish the build"
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.spdx.json
+      - name: "Publish the build"
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist.tar.gz
+      
 
   # Deploy job
   # deploy:
