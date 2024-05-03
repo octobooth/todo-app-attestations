@@ -14,39 +14,56 @@ jobs:
       attestations: write
       contents: read
     steps:
+      # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: "Install dependencies"
+
+      # Install dependencies
+      - name: Install dependencies
         run: npm install
-      - name: "Generate SBOM"
+
+      # Generate SBOM from the dependencies (scanning the workspace directory)
+      - name: Generate SBOM
         uses: anchore/sbom-action@v0
         with:
+          upload-artifact: false
+          upload-release-assets: false
           format: 'spdx-json'
           output-file: 'sbom.spdx.json'
-      - name: "Build site"
+
+      # Build the site using the build script in package.json
+      - name: Build site
         run: npm run build
-      - name: "Package the build"
+
+      # Package the build into a tarball so it can be easily verified
+      - name: Package the build
         run: tar -czf dist.tar.gz dist
+
       # Commented out, as the SBOM version includes more detail.
       # - name: Attest Build Provenance
       #   uses: actions/attest-build-provenance@v1
       #   with:
       #     subject-path: "dist.tar.gz"
+
+      # Complete an attestation of the SBOM and the build
       - uses: actions/attest-sbom@v1
         with:
           subject-path: 'dist.tar.gz'
           sbom-path: 'sbom.spdx.json'
-      - name: "Publish the SBOM"
+
+      # Publish the SBOM (Zipped per https://github.com/actions/upload-artifact?tab=readme-ov-file#zip-archives)
+      - name: Publish the SBOM
         uses: actions/upload-artifact@v4
         with:
           name: sbom
           path: sbom.spdx.json
-      - name: "Publish the build"
+
+      # Publish the build
+      - name: Publish the build
         uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist.tar.gz
-      
 
   # Deploy job
   # deploy:
