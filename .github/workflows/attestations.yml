@@ -27,10 +27,11 @@ jobs:
         run: npm run build
       - name: "Package the build"
         run: tar -czf dist.tar.gz dist
-      - name: Attest Build Provenance
-        uses: actions/attest-build-provenance@v1
-        with:
-          subject-path: "dist.tar.gz"
+      # Commented out, as the SBOM version includes more detail.
+      # - name: Attest Build Provenance
+      #   uses: actions/attest-build-provenance@v1
+      #   with:
+      #     subject-path: "dist.tar.gz"
       - uses: actions/attest-sbom@v1
         with:
           subject-path: 'dist.tar.gz'
