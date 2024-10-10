@@ -62,7 +62,7 @@ jobs:
       - name: Publish the build
         uses: actions/upload-artifact@v4
         with:
-          name: dist
+          name: github-pages
           path: dist.tar.gz
 
   # Deploy job
