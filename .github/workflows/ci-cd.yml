@@ -1,4 +1,4 @@
-name: React Todo App CI/CD
+name: Task Dashboard App CI/CD
 
 on:
   push:

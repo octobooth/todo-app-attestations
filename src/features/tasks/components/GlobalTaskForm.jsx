@@ -8,7 +8,7 @@ function GlobalTaskForm({ onCancel }) {
   const { addTask } = useTaskContext();
   const { tags, addTag } = useTagContext();
   
-  const [text, setText] = useState('');
+  const [title, setTitle] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
   const [newTagInput, setNewTagInput] = useState('');
   const inputRef = useRef(null);
@@ -22,7 +22,7 @@ function GlobalTaskForm({ onCancel }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!text.trim()) return;
+    if (!title.trim()) return;
     
     // Add current tag input if it exists and not already added
     const finalTagInput = newTagInput.trim();
@@ -31,12 +31,12 @@ function GlobalTaskForm({ onCancel }) {
       if (!tags.includes(finalTagInput)) {
         addTag(finalTagInput);
       }
-      addTask({ text, isCompleted: false, tags: [...selectedTags, finalTagInput] });
+      addTask({ title, description: "", isCompleted: false, tags: [...selectedTags, finalTagInput] });
     } else {
-      addTask({ text, isCompleted: false, tags: selectedTags });
+      addTask({ title, description: "", isCompleted: false, tags: selectedTags });
     }
     
-    setText('');
+    setTitle('');
     setSelectedTags([]);
     setNewTagInput('');
     onCancel();
@@ -78,8 +78,8 @@ function GlobalTaskForm({ onCancel }) {
           ref={inputRef}
           type="text"
           placeholder="What needs to be done?"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           className="w-full py-3 px-4 pr-24 text-neutral-800 rounded-lg border border-neutral-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-200 outline-hidden transition-all"
           autoComplete="off"
           data-testid="task-input"
@@ -96,13 +96,13 @@ function GlobalTaskForm({ onCancel }) {
           </motion.button>
           <motion.button
             type="submit"
-            disabled={!text.trim()}
+            disabled={!title.trim()}
             className={`p-2 rounded-full ${
-              text.trim() 
+              title.trim() 
                 ? 'text-primary-600 hover:text-primary-800 hover:bg-primary-50' 
                 : 'text-neutral-300 cursor-not-allowed'
             } transition-colors`}
-            whileTap={text.trim() ? { scale: 0.9 } : {}}
+            whileTap={title.trim() ? { scale: 0.9 } : {}}
             data-testid="submit-button"
           >
             <CheckIcon className="h-5 w-5" />

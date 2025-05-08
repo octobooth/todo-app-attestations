@@ -1,4 +1,4 @@
-# React Todo App - Copilot Instructions
+# Task Dashboard App - Copilot Instructions
 
 ## Project Overview
 This is a React-based Todo application that allows users to create, manage, and organize tasks with features like tags, task lists, and task filtering. The application is built using React, Framer Motion for animations, and Tailwind CSS for styling. It uses Vite as the build tool and Vitest for testing.

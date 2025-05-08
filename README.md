@@ -1,70 +1,91 @@
-# GitHub Codespaces ♥️ React
+# Task Dashboard
 
-Welcome to your shiny new Codespace running React! We've got everything fired up and running for you to explore React.
+A task management application that allows users to create, organize, and filter tasks using a modern, responsive UI built with React.
 
-You've got a blank canvas to work on from a git perspective as well. There's a single initial commit with the what you're seeing right now - where you go from here is up to you!
+![Task Dashboard](https://github.com/yourusername/todo-app-attestations/raw/main/public/screenshot.png)
 
-Everything you do here is contained within this one codespace. There is no repository on GitHub yet. If and when you’re ready you can click "Publish Branch" and we’ll create your repository and push up your project. If you were just exploring then and have no further need for this code then you can simply delete your codespace and it's gone forever.
+> **Note:** This application is intended for demonstration purposes only and is not meant for production use.
 
-This project was bootstrapped for you with [Vite](https://vitejs.dev/).
+## Features
 
-## Available Scripts
+- **Task Management**: Create, complete, and delete tasks
+- **Task Tags**: Organize tasks with customizable tags
+- **Task Lists**: Create multiple lists with custom filters
+- **List Filters**: Filter tasks by tags or completion status
+- **Animations**: Smooth transitions and animations using Framer Motion
+- **Responsive Design**: Works on desktop and mobile devices
 
-In the project directory, you can run:
+## Technology Stack
 
-### `npm start`
+- **React**: Modern React with functional components and hooks
+- **Tailwind CSS**: Utility-first CSS framework for styling
+- **Framer Motion**: Animation library for React
+- **Vite**: Fast, modern build tool and development server
+- **Vitest**: Testing framework compatible with Vite
 
-We've already run this for you in the `Codespaces: server` terminal window below. If you need to stop the server for any reason you can just run `npm start` again to bring it back online.
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000/](http://localhost:3000/) in the built-in Simple Browser (`Cmd/Ctrl + Shift + P > Simple Browser: Show`) to view your running application.
+### Prerequisites
 
-The page will reload automatically when you make changes.\
-You may also see any lint errors in the console.
+- Node.js (v18+)
+- npm (v10+)
 
-### `npm test`
+### Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/todo-app-attestations.git
+   cd todo-app-attestations
+   ```
 
-### `npm run build`
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Start the development server:
+   ```bash
+   npm start
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. Open [http://localhost:3000](http://localhost:3000) to view the app
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Available Scripts
 
-## Learn More
+- `npm start` - Start the development server
+- `npm test` - Run tests with Vitest
+- `npm run build` - Build for production
+- `npm run preview` - Preview the production build locally
 
-You can learn more in the [Vite documentation](https://vitejs.dev/guide/).
+## Architecture
 
-To learn Vitest, a Vite-native testing framework, go to [Vitest documentation](https://vitest.dev/guide/)
+### State Management
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The application uses React Context for state management:
 
-### Code Splitting
+- **TaskContext**: Manages tasks state and operations (add, toggle, delete)
+- **TagContext**: Manages tags and their relationships with tasks
+- **ListContext**: Manages task lists and filtering logic
 
-This section has moved here: [https://sambitsahoo.com/blog/vite-code-splitting-that-works.html](https://sambitsahoo.com/blog/vite-code-splitting-that-works.html)
+### UI Components
 
-### Analyzing the Bundle Size
+The application features several key components:
+- **TaskList**: Renders a list of tasks
+- **TaskItem**: Renders an individual task
+- **TaskBoard**: Manages multiple task lists
+- **TagManager**: Interface for creating and managing tags
+- **GlobalTaskForm**: Form for creating new tasks
+- **ListAddTask**: Form for adding tasks to specific lists
+- **TaskListConfig**: Interface for configuring task lists
 
-This section has moved here: [https://github.com/btd/rollup-plugin-visualizer#rollup-plugin-visualizer](https://github.com/btd/rollup-plugin-visualizer#rollup-plugin-visualizer)
+## Contributing
 
-### Making a Progressive Web App
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-This section has moved here: [https://dev.to/hamdankhan364/simplifying-progressive-web-app-pwa-development-with-vite-a-beginners-guide-38cf](https://dev.to/hamdankhan364/simplifying-progressive-web-app-pwa-development-with-vite-a-beginners-guide-38cf)
+## License
 
-### Advanced Configuration
-
-This section has moved here: [https://vitejs.dev/guide/build.html#advanced-base-options](https://vitejs.dev/guide/build.html#advanced-base-options)
-
-### Deployment
-
-This section has moved here: [https://vitejs.dev/guide/build.html](https://vitejs.dev/guide/build.html)
-
-### Troubleshooting
-
-This section has moved here: [https://vitejs.dev/guide/troubleshooting.html](https://vitejs.dev/guide/troubleshooting.html)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

@@ -36,7 +36,7 @@ function TaskItem({ task }) {
             onClick={() => toggleTask(task.id)}
             data-testid={`task-text-${task.id}`}
           >
-            {task.text}
+            {task.title || task.text}
           </p>
         </div>
         

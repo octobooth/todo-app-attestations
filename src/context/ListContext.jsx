@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+import { DataHydrationService } from '../common/utils/DataHydrationService';
 
 // Create the list context
 const ListContext = createContext();
@@ -8,9 +9,12 @@ export const useListContext = () => useContext(ListContext);
 
 // List provider component
 export const ListProvider = ({ children }) => {
-  const [taskLists, setTaskLists] = useState([
-    { id: 'default', title: 'All Tasks', filters: [] }
-  ]);
+  const [taskLists, setTaskLists] = useState(() => {
+    // Initialize with hydrated data if should hydrate
+    return DataHydrationService.shouldHydrate() 
+      ? DataHydrationService.getInitialTaskLists() 
+      : [{ id: 'default', title: 'All Tasks', filters: [] }];
+  });
 
   const addTaskList = () => {
     const newList = {
