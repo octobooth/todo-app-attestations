@@ -16,7 +16,7 @@ function App() {
     <TaskProvider>
       <TagProvider>
         <ListProvider>
-          <div className="App min-h-screen bg-linear-to-br from-primary-50 to-secondary-50 flex flex-col items-center py-12 px-4" data-testid="app">
+          <div className="App min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 flex flex-col items-center py-12 px-4" data-testid="app">
             <div className="w-full max-w-6xl">
               <motion.div 
                 className="mb-6 bg-white rounded-2xl shadow-soft p-6"

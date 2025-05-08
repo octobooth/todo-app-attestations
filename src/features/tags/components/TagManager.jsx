@@ -87,7 +87,7 @@ function TagManager({ onClose }) {
       </div>
 
       {/* Tag list */}
-      <div className="space-y-2 max-h-64 overflow-y-auto" data-testid="tag-list">
+      <div className="flex flex-col gap-2 max-h-64 overflow-y-auto" data-testid="tag-list">
         {tags.length === 0 ? (
           <p className="text-center text-neutral-500 py-3" data-testid="no-tags-message">No tags yet</p>
         ) : (
@@ -102,7 +102,7 @@ function TagManager({ onClose }) {
                   type="text"
                   value={editedTagName}
                   onChange={(e) => setEditedTagName(e.target.value)}
-                  className="w-full py-1 px-2 text-sm border border-primary-300 rounded-sm focus:outline-hidden focus:ring-1 focus:ring-primary-500"
+                  className="w-full py-1 px-2 text-sm border border-primary-300 rounded-xs focus:outline-hidden focus:ring-1 focus:ring-primary-500"
                   autoFocus
                   data-testid="edit-tag-input"
                 />

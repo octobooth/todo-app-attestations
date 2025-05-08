@@ -110,7 +110,7 @@ function TaskBoard() {
         )}
       </AnimatePresence>
 
-      <div className="flex flex-wrap gap-4" data-testid="task-lists-container">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-4" data-testid="task-lists-container">
         {taskLists.map(list => {
           const filteredTasks = getFilteredTasks(list.filters, tasks);
           const completedTasksCount = filteredTasks.filter(task => task.isCompleted).length;
@@ -120,7 +120,7 @@ function TaskBoard() {
           return (
             <div 
               key={list.id} 
-              className="task-list-container bg-white rounded-xl shadow-soft w-full md:w-[calc(50%-0.5rem)] lg:w-80 shrink-0 flex flex-col"
+              className="task-list-container bg-white rounded-xl shadow-soft w-full flex flex-col"
               data-testid={`task-list-${list.id}`}
             >
               {editingListId === list.id ? (
@@ -135,14 +135,14 @@ function TaskBoard() {
                     <h2 className="font-medium text-lg" data-testid={`list-title-${list.id}`}>{list.title}</h2>
                     <div className="flex items-center gap-2">
                       <span 
-                        className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded-sm"
+                        className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded-xs"
                         data-testid={`task-count-${list.id}`}
                       >
                         {completedTasksCount}/{filteredTasks.length}
                       </span>
                       <button 
                         type="button"
-                        className="text-sm text-neutral-500 hover:text-neutral-700 px-2 py-1 hover:bg-neutral-100 rounded-sm"
+                        className="text-sm text-neutral-500 hover:text-neutral-700 px-2 py-1 hover:bg-neutral-100 rounded-xs"
                         onClick={() => handleEditTaskList(list.id)}
                         data-testid={`edit-list-${list.id}`}
                       >
@@ -151,7 +151,7 @@ function TaskBoard() {
                       {list.id !== 'default' && (
                         <button 
                           type="button"
-                          className="text-sm text-rose-500 hover:text-rose-700 px-2 py-1 hover:bg-rose-50 rounded-sm"
+                          className="text-sm text-rose-500 hover:text-rose-700 px-2 py-1 hover:bg-rose-50 rounded-xs"
                           onClick={() => deleteTaskList(list.id)}
                           data-testid={`delete-list-${list.id}`}
                         >
@@ -224,7 +224,7 @@ function TaskBoard() {
         {/* Add new task list button */}
         <motion.button
           type="button"
-          className="add-list-button w-full md:w-[calc(50%-0.5rem)] lg:w-80 h-48 rounded-xl border-2 border-dashed border-neutral-200 flex flex-col items-center justify-center text-neutral-400 hover:text-primary-600 hover:border-primary-300 transition-colors"
+          className="add-list-button h-48 rounded-xl border-2 border-dashed border-neutral-200 flex flex-col items-center justify-center text-neutral-400 hover:text-primary-600 hover:border-primary-300 transition-colors"
           onClick={addTaskList}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}

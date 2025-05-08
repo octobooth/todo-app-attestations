@@ -4,7 +4,7 @@ import TaskItem from './TaskItem';
 
 function TaskList({ tasks }) {
   return (
-    <div className="task-list space-y-2" data-testid="task-list">
+    <div className="task-list flex flex-col gap-2" data-testid="task-list">
       <AnimatePresence>
         {tasks.length > 0 ? (
           tasks.map((task) => (
