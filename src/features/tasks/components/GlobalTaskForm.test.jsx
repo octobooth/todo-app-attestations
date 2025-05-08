@@ -136,7 +136,8 @@ describe('GlobalTaskForm Component', () => {
     fireEvent.click(submitButton);
     
     expect(mockAddTask).toHaveBeenCalledWith({
-      text: 'Submit Test Task',
+      title: 'Submit Test Task',
+      description: "",
       isCompleted: false,
       tags: ['test-tag']
     });

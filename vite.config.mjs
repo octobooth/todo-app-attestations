@@ -9,6 +9,9 @@ export default defineConfig({
     react(),
     tailwindcss(), // Add the Tailwind CSS Vite plugin
   ],
+  ssr: {
+    noExternal: ['@tailwindcss/vite']
+  },
   test: {
     globals: true,
     environment: 'jsdom',

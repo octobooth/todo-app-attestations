@@ -27,7 +27,7 @@
     "build:clean": "VITE_ENABLE_DATA_HYDRATION=false vite build",
     "preview": "vite preview",
     "preview:hydrated": "VITE_ENABLE_DATA_HYDRATION=true vite preview",
-    "test": "vitest",
+    "test": "vitest run",
     "build:css": "tailwindcss build src/index.css -o src/output.css",
     "watch:css": "tailwindcss -i src/index.css -o src/output.css --watch"
   },
