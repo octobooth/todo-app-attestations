@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useTaskContext } from './TaskContext';
 
 // Create the tag context
@@ -11,6 +11,25 @@ export const useTagContext = () => useContext(TagContext);
 export const TagProvider = ({ children }) => {
   const [tags, setTags] = useState([]);
   const { tasks } = useTaskContext();
+
+  // Extract and collect all unique tags from tasks when tasks change
+  useEffect(() => {
+    const uniqueTags = new Set();
+    
+    // Collect all tags from all tasks
+    tasks.forEach(task => {
+      if (task.tags && Array.isArray(task.tags)) {
+        task.tags.forEach(tag => uniqueTags.add(tag));
+      }
+    });
+    
+    // Add these to our existing tags (without duplicates)
+    const updatedTags = Array.from(uniqueTags);
+    setTags(prevTags => {
+      const allTags = new Set([...prevTags, ...updatedTags]);
+      return Array.from(allTags);
+    });
+  }, [tasks]);
 
   const addTag = (tag) => {
     if (!tags.includes(tag)) {

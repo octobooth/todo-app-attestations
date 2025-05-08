@@ -113,7 +113,8 @@ function TaskBoard() {
       <div className="flex flex-wrap gap-4" data-testid="task-lists-container">
         {taskLists.map(list => {
           const filteredTasks = getFilteredTasks(list.filters, tasks);
-          const hasCompletedTasks = filteredTasks.some(task => task.isCompleted);
+          const completedTasksCount = filteredTasks.filter(task => task.isCompleted).length;
+          const hasCompletedTasks = completedTasksCount > 0;
           const allTasksCompleted = filteredTasks.length > 0 && filteredTasks.every(task => task.isCompleted);
           
           return (
@@ -132,7 +133,13 @@ function TaskBoard() {
                 <>
                   <div className="list-header p-4 border-b border-neutral-100 flex justify-between items-center">
                     <h2 className="font-medium text-lg" data-testid={`list-title-${list.id}`}>{list.title}</h2>
-                    <div className="flex gap-2">
+                    <div className="flex items-center gap-2">
+                      <span 
+                        className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded"
+                        data-testid={`task-count-${list.id}`}
+                      >
+                        {completedTasksCount}/{filteredTasks.length}
+                      </span>
                       <button 
                         type="button"
                         className="text-sm text-neutral-500 hover:text-neutral-700 px-2 py-1 hover:bg-neutral-100 rounded"
