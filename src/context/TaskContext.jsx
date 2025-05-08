@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { DataHydrationService } from '../common/utils/DataHydrationService';
 
 // Create the task context
 const TaskContext = createContext();
@@ -8,7 +9,12 @@ export const useTaskContext = () => useContext(TaskContext);
 
 // Task provider component
 export const TaskProvider = ({ children }) => {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    // Initialize with hydrated data if should hydrate
+    return DataHydrationService.shouldHydrate() 
+      ? DataHydrationService.getInitialTasks() 
+      : [];
+  });
   const [stats, setStats] = useState({ total: 0, completed: 0, remaining: 0 });
 
   useEffect(() => {

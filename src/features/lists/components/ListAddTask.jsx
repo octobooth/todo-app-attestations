@@ -48,7 +48,7 @@ function ListAddTask({ onCancel, listFilters }) {
           placeholder="Add a task to this list..."
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="w-full py-2 px-4 pr-20 text-sm text-neutral-800 rounded-lg border border-neutral-200 focus:border-primary-400 focus:ring-1 focus:ring-primary-200 outline-none transition-all"
+          className="w-full py-2 px-4 pr-20 text-sm text-neutral-800 rounded-lg border border-neutral-200 focus:border-primary-400 focus:ring-1 focus:ring-primary-200 outline-hidden transition-all"
           autoComplete="off"
           data-testid="list-task-input"
         />

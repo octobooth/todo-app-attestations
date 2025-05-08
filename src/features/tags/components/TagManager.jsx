@@ -57,7 +57,7 @@ function TagManager({ onClose }) {
       {/* Add new tag */}
       <div className="mb-5">
         <div className="flex gap-2">
-          <div className="relative flex-grow">
+          <div className="relative grow">
             <div className="absolute left-3 top-1/2 -translate-y-1/2">
               <TagIcon className="h-4 w-4 text-neutral-500" />
             </div>
@@ -66,7 +66,7 @@ function TagManager({ onClose }) {
               placeholder="Add a new tag"
               value={newTagName}
               onChange={(e) => setNewTagName(e.target.value)}
-              className="w-full py-2 px-4 pl-9 text-sm text-neutral-800 rounded-lg border border-neutral-300 focus:border-primary-400 focus:ring-1 focus:ring-primary-200 outline-none transition-all"
+              className="w-full py-2 px-4 pl-9 text-sm text-neutral-800 rounded-lg border border-neutral-300 focus:border-primary-400 focus:ring-1 focus:ring-primary-200 outline-hidden transition-all"
               data-testid="new-tag-input"
             />
           </div>
@@ -87,7 +87,7 @@ function TagManager({ onClose }) {
       </div>
 
       {/* Tag list */}
-      <div className="space-y-2 max-h-64 overflow-y-auto" data-testid="tag-list">
+      <div className="flex flex-col gap-2 max-h-64 overflow-y-auto" data-testid="tag-list">
         {tags.length === 0 ? (
           <p className="text-center text-neutral-500 py-3" data-testid="no-tags-message">No tags yet</p>
         ) : (
@@ -102,7 +102,7 @@ function TagManager({ onClose }) {
                   type="text"
                   value={editedTagName}
                   onChange={(e) => setEditedTagName(e.target.value)}
-                  className="w-full py-1 px-2 text-sm border border-primary-300 rounded focus:outline-none focus:ring-1 focus:ring-primary-500"
+                  className="w-full py-1 px-2 text-sm border border-primary-300 rounded-xs focus:outline-hidden focus:ring-1 focus:ring-primary-500"
                   autoFocus
                   data-testid="edit-tag-input"
                 />

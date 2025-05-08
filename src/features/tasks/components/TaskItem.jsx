@@ -12,10 +12,10 @@ function TaskItem({ task }) {
         task.isCompleted 
           ? 'border-green-100 bg-green-50' 
           : 'border-neutral-100 hover:border-primary-100 bg-white hover:bg-primary-50/30'
-      } p-4 shadow-sm hover:shadow-md transition-all duration-200`}
+      } p-4 shadow-xs hover:shadow-md transition-all duration-200`}
     >
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center gap-3">
           <div className="checkbox-container" onClick={() => toggleTask(task.id)}>
             <input 
               type="checkbox" 
@@ -36,7 +36,7 @@ function TaskItem({ task }) {
             onClick={() => toggleTask(task.id)}
             data-testid={`task-text-${task.id}`}
           >
-            {task.text}
+            {task.title || task.text}
           </p>
         </div>
         

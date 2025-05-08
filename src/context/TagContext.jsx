@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useTaskContext } from './TaskContext';
+import { DataHydrationService } from '../common/utils/DataHydrationService';
 
 // Create the tag context
 const TagContext = createContext();
@@ -9,7 +10,12 @@ export const useTagContext = () => useContext(TagContext);
 
 // Tag provider component
 export const TagProvider = ({ children }) => {
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(() => {
+    // Initialize with hydrated data if should hydrate
+    return DataHydrationService.shouldHydrate() 
+      ? DataHydrationService.getInitialTags() 
+      : [];
+  });
   const { tasks } = useTaskContext();
 
   // Extract and collect all unique tags from tasks when tasks change
