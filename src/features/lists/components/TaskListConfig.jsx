@@ -46,7 +46,7 @@ function TaskListConfig({ taskList, onSave, onCancel }) {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-500"
+          className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-hidden focus:ring-1 focus:ring-primary-500"
           placeholder="Enter list title"
           data-testid="list-title-input"
         />

@@ -80,7 +80,7 @@ function GlobalTaskForm({ onCancel }) {
           placeholder="What needs to be done?"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="w-full py-3 px-4 pr-24 text-neutral-800 rounded-lg border border-neutral-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+          className="w-full py-3 px-4 pr-24 text-neutral-800 rounded-lg border border-neutral-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-200 outline-hidden transition-all"
           autoComplete="off"
           data-testid="task-input"
         />
@@ -122,7 +122,7 @@ function GlobalTaskForm({ onCancel }) {
             value={newTagInput}
             onChange={(e) => setNewTagInput(e.target.value)}
             onKeyDown={handleTagKeyDown}
-            className="w-full py-3 px-4 pl-9 text-sm text-neutral-800 rounded-lg border border-neutral-200 focus:border-primary-400 focus:ring-1 focus:ring-primary-200 outline-none transition-all"
+            className="w-full py-3 px-4 pl-9 text-sm text-neutral-800 rounded-lg border border-neutral-200 focus:border-primary-400 focus:ring-1 focus:ring-primary-200 outline-hidden transition-all"
             autoComplete="off"
             data-testid="tag-input"
           />

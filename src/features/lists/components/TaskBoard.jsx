@@ -120,7 +120,7 @@ function TaskBoard() {
           return (
             <div 
               key={list.id} 
-              className="task-list-container bg-white rounded-xl shadow-soft w-full md:w-[calc(50%-0.5rem)] lg:w-80 flex-shrink-0 flex flex-col"
+              className="task-list-container bg-white rounded-xl shadow-soft w-full md:w-[calc(50%-0.5rem)] lg:w-80 shrink-0 flex flex-col"
               data-testid={`task-list-${list.id}`}
             >
               {editingListId === list.id ? (
@@ -135,14 +135,14 @@ function TaskBoard() {
                     <h2 className="font-medium text-lg" data-testid={`list-title-${list.id}`}>{list.title}</h2>
                     <div className="flex items-center gap-2">
                       <span 
-                        className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded"
+                        className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded-sm"
                         data-testid={`task-count-${list.id}`}
                       >
                         {completedTasksCount}/{filteredTasks.length}
                       </span>
                       <button 
                         type="button"
-                        className="text-sm text-neutral-500 hover:text-neutral-700 px-2 py-1 hover:bg-neutral-100 rounded"
+                        className="text-sm text-neutral-500 hover:text-neutral-700 px-2 py-1 hover:bg-neutral-100 rounded-sm"
                         onClick={() => handleEditTaskList(list.id)}
                         data-testid={`edit-list-${list.id}`}
                       >
@@ -151,7 +151,7 @@ function TaskBoard() {
                       {list.id !== 'default' && (
                         <button 
                           type="button"
-                          className="text-sm text-rose-500 hover:text-rose-700 px-2 py-1 hover:bg-rose-50 rounded"
+                          className="text-sm text-rose-500 hover:text-rose-700 px-2 py-1 hover:bg-rose-50 rounded-sm"
                           onClick={() => deleteTaskList(list.id)}
                           data-testid={`delete-list-${list.id}`}
                         >
@@ -161,7 +161,7 @@ function TaskBoard() {
                     </div>
                   </div>
                   
-                  <div className="list-body p-4 flex-grow overflow-y-auto max-h-[50vh]">
+                  <div className="list-body p-4 grow overflow-y-auto max-h-[50vh]">
                     {/* Show add task form when adding to this list */}
                     {addingTaskToListId === list.id ? (
                       <div className="mb-3">
