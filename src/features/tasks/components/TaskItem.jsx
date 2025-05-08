@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckIcon, TrashIcon, TagIcon } from '@heroicons/react/24/outline';
+import { useTaskContext } from '../../../context/TaskContext';
 
-function TaskItem({ task, toggleTask, deleteTask }) {
+function TaskItem({ task }) {
+  const { toggleTask, deleteTask } = useTaskContext();
+  
   return (
     <div 
       className={`task-transition rounded-xl border ${
@@ -19,6 +22,7 @@ function TaskItem({ task, toggleTask, deleteTask }) {
               checked={task.isCompleted} 
               readOnly 
               className="cursor-pointer"
+              data-testid={`task-checkbox-${task.id}`}
             />
             <CheckIcon className="checkmark h-3 w-3 text-white cursor-pointer" />
           </div>
@@ -30,6 +34,7 @@ function TaskItem({ task, toggleTask, deleteTask }) {
                 : 'text-neutral-800'
             }`}
             onClick={() => toggleTask(task.id)}
+            data-testid={`task-text-${task.id}`}
           >
             {task.text}
           </p>
@@ -44,6 +49,7 @@ function TaskItem({ task, toggleTask, deleteTask }) {
           onClick={() => deleteTask(task.id)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          data-testid={`delete-task-${task.id}`}
         >
           <TrashIcon className="h-4 w-4" />
         </motion.button>
@@ -51,7 +57,7 @@ function TaskItem({ task, toggleTask, deleteTask }) {
       
       {/* Display tags if they exist */}
       {task.tags && task.tags.length > 0 && (
-        <div className="mt-2 flex flex-wrap gap-1">
+        <div className="mt-2 flex flex-wrap gap-1" data-testid={`task-tags-${task.id}`}>
           {task.tags.map((tag, index) => (
             <div 
               key={index} 

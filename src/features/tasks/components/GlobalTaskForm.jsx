@@ -1,8 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CheckIcon, XMarkIcon, TagIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { useTaskContext } from '../../../context/TaskContext';
+import { useTagContext } from '../../../context/TagContext';
 
-function GlobalTaskForm({ onAdd, onCancel, availableTags = [] }) {
+function GlobalTaskForm({ onCancel }) {
+  const { addTask } = useTaskContext();
+  const { tags, addTag } = useTagContext();
+  
   const [text, setText] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
   const [newTagInput, setNewTagInput] = useState('');
@@ -15,30 +20,35 @@ function GlobalTaskForm({ onAdd, onCancel, availableTags = [] }) {
     }
   }, []);
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!text.trim()) return;
     
     // Add current tag input if it exists and not already added
     const finalTagInput = newTagInput.trim();
     if (finalTagInput && !selectedTags.includes(finalTagInput)) {
-      onAdd({ text, isCompleted: false, tags: [...selectedTags, finalTagInput] });
+      // Add to global tags list if it's a new tag
+      if (!tags.includes(finalTagInput)) {
+        addTag(finalTagInput);
+      }
+      addTask({ text, isCompleted: false, tags: [...selectedTags, finalTagInput] });
     } else {
-      onAdd({ text, isCompleted: false, tags: selectedTags });
+      addTask({ text, isCompleted: false, tags: selectedTags });
     }
     
     setText('');
     setSelectedTags([]);
     setNewTagInput('');
+    onCancel();
   };
 
-  const addTag = (tag) => {
+  const handleAddTag = (tag) => {
     if (!tag.trim() || selectedTags.includes(tag.trim())) return;
     setSelectedTags([...selectedTags, tag.trim()]);
     setNewTagInput('');
   };
   
-  const removeTag = (tag) => {
+  const handleRemoveTag = (tag) => {
     setSelectedTags(selectedTags.filter(t => t !== tag));
   };
 
@@ -46,7 +56,7 @@ function GlobalTaskForm({ onAdd, onCancel, availableTags = [] }) {
   const handleTagKeyDown = (e) => {
     if ((e.key === 'Enter' || e.key === ',') && newTagInput.trim()) {
       e.preventDefault();
-      addTag(newTagInput.trim());
+      handleAddTag(newTagInput.trim());
     }
   };
 
@@ -55,14 +65,14 @@ function GlobalTaskForm({ onAdd, onCancel, availableTags = [] }) {
     if (!newTagInput.trim()) return [];
     
     const inputLower = newTagInput.toLowerCase();
-    return availableTags.filter(tag => 
+    return tags.filter(tag => 
       !selectedTags.includes(tag) && 
       tag.toLowerCase().includes(inputLower)
     );
   };
 
   return (
-    <form className="global-task-form mb-6" onSubmit={onSubmit}>
+    <form className="global-task-form mb-6" onSubmit={handleSubmit} data-testid="global-task-form">
       <div className="relative mb-4">
         <input
           ref={inputRef}
@@ -72,6 +82,7 @@ function GlobalTaskForm({ onAdd, onCancel, availableTags = [] }) {
           onChange={(e) => setText(e.target.value)}
           className="w-full py-3 px-4 pr-24 text-neutral-800 rounded-lg border border-neutral-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
           autoComplete="off"
+          data-testid="task-input"
         />
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1">
           <motion.button
@@ -79,6 +90,7 @@ function GlobalTaskForm({ onAdd, onCancel, availableTags = [] }) {
             onClick={onCancel}
             className="p-2 text-neutral-500 hover:text-neutral-700 rounded-full hover:bg-neutral-100 transition-colors"
             whileTap={{ scale: 0.9 }}
+            data-testid="cancel-button"
           >
             <XMarkIcon className="h-5 w-5" />
           </motion.button>
@@ -91,6 +103,7 @@ function GlobalTaskForm({ onAdd, onCancel, availableTags = [] }) {
                 : 'text-neutral-300 cursor-not-allowed'
             } transition-colors`}
             whileTap={text.trim() ? { scale: 0.9 } : {}}
+            data-testid="submit-button"
           >
             <CheckIcon className="h-5 w-5" />
           </motion.button>
@@ -111,14 +124,16 @@ function GlobalTaskForm({ onAdd, onCancel, availableTags = [] }) {
             onKeyDown={handleTagKeyDown}
             className="w-full py-3 px-4 pl-9 text-sm text-neutral-800 rounded-lg border border-neutral-200 focus:border-primary-400 focus:ring-1 focus:ring-primary-200 outline-none transition-all"
             autoComplete="off"
+            data-testid="tag-input"
           />
           
           {/* Add button */}
           {newTagInput.trim() && !selectedTags.includes(newTagInput.trim()) && (
             <button
               type="button"
-              onClick={() => addTag(newTagInput.trim())}
+              onClick={() => handleAddTag(newTagInput.trim())}
               className="absolute right-2 top-1/2 -translate-y-1/2 p-1 bg-primary-500 hover:bg-primary-600 text-white rounded-full"
+              data-testid="add-tag-button"
             >
               <PlusIcon className="h-4 w-4" />
             </button>
@@ -127,15 +142,16 @@ function GlobalTaskForm({ onAdd, onCancel, availableTags = [] }) {
         
         {/* Matching tag suggestions - only shown when input matches existing tags */}
         {getMatchingTags().length > 0 && (
-          <div className="mt-2">
+          <div className="mt-2" data-testid="tag-suggestions">
             <p className="text-xs font-medium text-neutral-500 mb-1.5">Select matching tag:</p>
             <div className="flex flex-wrap gap-2">
               {getMatchingTags().map((tag, index) => (
                 <button
                   key={index}
                   type="button"
-                  onClick={() => addTag(tag)}
+                  onClick={() => handleAddTag(tag)}
                   className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-primary-50 text-primary-700 hover:bg-primary-100 transition-colors"
+                  data-testid={`tag-suggestion-${tag}`}
                 >
                   <TagIcon className="h-3 w-3 mr-1" />
                   {tag}
@@ -148,13 +164,14 @@ function GlobalTaskForm({ onAdd, onCancel, availableTags = [] }) {
       
       {/* Selected tags display */}
       {selectedTags.length > 0 && (
-        <div className="mb-1">
+        <div className="mb-1" data-testid="selected-tags">
           <p className="text-xs font-medium text-neutral-500 mb-2">Selected tags:</p>
           <div className="flex flex-wrap gap-2 p-2 bg-neutral-50 rounded-lg">
             {selectedTags.map((tag, index) => (
               <div 
                 key={index} 
                 className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-primary-500 text-white group"
+                data-testid={`selected-tag-${tag}`}
               >
                 <TagIcon className="h-3 w-3 mr-1" />
                 <span>{tag}</span>
@@ -163,8 +180,9 @@ function GlobalTaskForm({ onAdd, onCancel, availableTags = [] }) {
                   className="ml-1 p-0.5 rounded-full hover:bg-primary-600 group-hover:text-white"
                   onClick={(e) => {
                     e.preventDefault();
-                    removeTag(tag);
+                    handleRemoveTag(tag);
                   }}
+                  data-testid={`remove-tag-${tag}`}
                 >
                   <XMarkIcon className="h-3 w-3" />
                 </button>

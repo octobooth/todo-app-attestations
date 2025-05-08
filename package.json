@@ -5,9 +5,6 @@
   "dependencies": {
     "@headlessui/react": "^2.2.2",
     "@heroicons/react": "^2.2.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^14.4.3",
     "autoprefixer": "^10.4.7",
     "framer-motion": "^12.10.4",
     "postcss": "^8.4.31",
@@ -48,8 +45,13 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@vitejs/plugin-react": "^4.1.1",
+    "jest-environment-jsdom": "^29.7.0",
     "jsdom": "^22.1.0",
+    "msw": "^2.7.6",
     "vite": "^4.5.3",
     "vitest": "^0.34.6"
   }

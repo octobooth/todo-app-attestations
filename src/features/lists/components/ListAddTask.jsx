@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useTaskContext } from '../../../context/TaskContext';
 
-function ListAddTask({ onAdd, onCancel, listFilters }) {
+function ListAddTask({ onCancel, listFilters }) {
+  const { addTask } = useTaskContext();
   const [text, setText] = useState('');
   const inputRef = useRef(null);
 
@@ -20,14 +22,14 @@ function ListAddTask({ onAdd, onCancel, listFilters }) {
     }
   }, []);
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!text.trim()) return;
     
     // Pre-populate with the list's tag filters
     const tagFilters = getTagFilters();
     
-    onAdd({ 
+    addTask({ 
       text, 
       isCompleted: false, 
       tags: tagFilters
@@ -38,7 +40,7 @@ function ListAddTask({ onAdd, onCancel, listFilters }) {
   };
 
   return (
-    <form className="list-add-form" onSubmit={onSubmit}>
+    <form className="list-add-form" onSubmit={handleSubmit} data-testid="list-add-task-form">
       <div className="relative">
         <input
           ref={inputRef}
@@ -48,6 +50,7 @@ function ListAddTask({ onAdd, onCancel, listFilters }) {
           onChange={(e) => setText(e.target.value)}
           className="w-full py-2 px-4 pr-20 text-sm text-neutral-800 rounded-lg border border-neutral-200 focus:border-primary-400 focus:ring-1 focus:ring-primary-200 outline-none transition-all"
           autoComplete="off"
+          data-testid="list-task-input"
         />
         <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex gap-1">
           <motion.button
@@ -55,6 +58,7 @@ function ListAddTask({ onAdd, onCancel, listFilters }) {
             onClick={onCancel}
             className="p-1.5 text-neutral-500 hover:text-neutral-700 rounded-full hover:bg-neutral-100 transition-colors"
             whileTap={{ scale: 0.9 }}
+            data-testid="list-cancel-button"
           >
             <XMarkIcon className="h-4 w-4" />
           </motion.button>
@@ -67,6 +71,7 @@ function ListAddTask({ onAdd, onCancel, listFilters }) {
                 : 'text-neutral-300 cursor-not-allowed'
             } transition-colors`}
             whileTap={text.trim() ? { scale: 0.9 } : {}}
+            data-testid="list-submit-button"
           >
             <CheckIcon className="h-4 w-4" />
           </motion.button>
@@ -75,7 +80,7 @@ function ListAddTask({ onAdd, onCancel, listFilters }) {
       
       {/* Show tags that will be automatically applied */}
       {getTagFilters().length > 0 && (
-        <div className="mt-2 mb-1 px-1">
+        <div className="mt-2 mb-1 px-1" data-testid="auto-applied-tags">
           <p className="text-xs text-neutral-500">
             Will be tagged with: 
             <span className="font-medium ml-1 text-primary-600">
