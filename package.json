@@ -9,7 +9,7 @@
     "framer-motion": "^12.10.4",
     "postcss": "^8.4.31",
     "react": "^19.1.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^19.1.0",
     "tailwindcss": "^3.1.8",
     "web-vitals": "^5.0.0"
   },
