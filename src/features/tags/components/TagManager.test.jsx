@@ -10,9 +10,12 @@ const mockDeleteTag = vi.fn();
 const mockUpdateTasksWithEditedTag = vi.fn();
 const mockUpdateTasksWithDeletedTag = vi.fn();
 
+// Mock data to control context values in tests
+let mockTagsValue = ['work', 'personal', 'urgent'];
+
 vi.mock('../../../context/TagContext', () => ({
   useTagContext: () => ({
-    tags: ['work', 'personal', 'urgent'],
+    tags: mockTagsValue,
     addTag: mockAddTag,
     editTag: mockEditTag,
     deleteTag: mockDeleteTag
@@ -36,6 +39,8 @@ describe('TagManager Component', () => {
     mockUpdateTasksWithEditedTag.mockClear();
     mockUpdateTasksWithDeletedTag.mockClear();
     mockOnClose.mockClear();
+    // Reset the mock tags to the default value before each test
+    mockTagsValue = ['work', 'personal', 'urgent'];
   });
 
   test('renders the tag manager correctly', () => {
@@ -137,12 +142,8 @@ describe('TagManager Component', () => {
   });
 
   test('renders no tags message when there are no tags', () => {
-    vi.spyOn(require('../../../context/TagContext'), 'useTagContext').mockReturnValue({
-      tags: [],
-      addTag: mockAddTag,
-      editTag: mockEditTag,
-      deleteTag: mockDeleteTag
-    });
+    // Set mock tags to an empty array for this test
+    mockTagsValue = [];
 
     render(<TagManager onClose={mockOnClose} />);
     

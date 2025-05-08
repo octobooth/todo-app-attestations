@@ -5,18 +5,10 @@ import ListAddTask from './ListAddTask';
 
 // Mock the context hooks
 const mockAddTask = vi.fn();
-const mockAddTag = vi.fn();
 
 vi.mock('../../../context/TaskContext', () => ({
   useTaskContext: () => ({
     addTask: mockAddTask
-  })
-}));
-
-vi.mock('../../../context/TagContext', () => ({
-  useTagContext: () => ({
-    tags: ['work', 'personal', 'urgent'],
-    addTag: mockAddTag
   })
 }));
 
@@ -28,16 +20,14 @@ describe('ListAddTask Component', () => {
   
   beforeEach(() => {
     mockAddTask.mockClear();
-    mockAddTag.mockClear();
     mockOnCancel.mockClear();
   });
 
   test('renders the form correctly', () => {
     render(<ListAddTask onCancel={mockOnCancel} listFilters={mockListFilters} />);
     
-    expect(screen.getByTestId('list-add-task')).toBeInTheDocument();
+    expect(screen.getByTestId('list-add-task-form')).toBeInTheDocument();
     expect(screen.getByTestId('list-task-input')).toBeInTheDocument();
-    expect(screen.getByTestId('list-tag-input')).toBeInTheDocument();
     expect(screen.getByTestId('list-cancel-button')).toBeInTheDocument();
     expect(screen.getByTestId('list-submit-button')).toBeInTheDocument();
   });
@@ -51,54 +41,20 @@ describe('ListAddTask Component', () => {
     expect(taskInput.value).toBe('New Test Task');
   });
 
-  test('handles tag input change', () => {
+  test('displays auto-applied tags from list filters', () => {
     render(<ListAddTask onCancel={mockOnCancel} listFilters={mockListFilters} />);
     
-    const tagInput = screen.getByTestId('list-tag-input');
-    fireEvent.change(tagInput, { target: { value: 'personal' } });
-    
-    expect(tagInput.value).toBe('personal');
+    expect(screen.getByTestId('auto-applied-tags')).toBeInTheDocument();
+    expect(screen.getByText(/will be tagged with/i)).toBeInTheDocument();
+    expect(screen.getByText(/work/i)).toBeInTheDocument();
   });
 
-  test('includes tags from list filters by default', () => {
-    render(<ListAddTask onCancel={mockOnCancel} listFilters={mockListFilters} />);
-    
-    expect(screen.getByTestId('list-selected-tags')).toBeInTheDocument();
-    expect(screen.getByText('work')).toBeInTheDocument();
-  });
-
-  test('adds a tag when Enter key is pressed', () => {
-    render(<ListAddTask onCancel={mockOnCancel} listFilters={mockListFilters} />);
-    
-    const tagInput = screen.getByTestId('list-tag-input');
-    fireEvent.change(tagInput, { target: { value: 'new-tag' } });
-    fireEvent.keyDown(tagInput, { key: 'Enter' });
-    
-    expect(screen.getByText('new-tag')).toBeInTheDocument();
-    expect(tagInput.value).toBe('');
-  });
-
-  test('removes a tag when remove button is clicked', () => {
-    render(<ListAddTask onCancel={mockOnCancel} listFilters={mockListFilters} />);
-    
-    const tagToRemove = screen.getByText('work');
-    const removeButton = screen.getByTestId('list-remove-tag-work');
-    fireEvent.click(removeButton);
-    
-    expect(screen.queryByText('work')).not.toBeInTheDocument();
-  });
-
-  test('submits the form with task and tags', () => {
+  test('submits the form with task and tags from list filters', () => {
     render(<ListAddTask onCancel={mockOnCancel} listFilters={mockListFilters} />);
     
     // Fill in task
     const taskInput = screen.getByTestId('list-task-input');
     fireEvent.change(taskInput, { target: { value: 'Submit Test Task' } });
-    
-    // Add another tag
-    const tagInput = screen.getByTestId('list-tag-input');
-    fireEvent.change(tagInput, { target: { value: 'urgent' } });
-    fireEvent.keyDown(tagInput, { key: 'Enter' });
     
     // Submit the form
     const submitButton = screen.getByTestId('list-submit-button');
@@ -107,7 +63,7 @@ describe('ListAddTask Component', () => {
     expect(mockAddTask).toHaveBeenCalledWith({
       text: 'Submit Test Task',
       isCompleted: false,
-      tags: ['work', 'urgent']
+      tags: ['work']
     });
     expect(mockOnCancel).toHaveBeenCalled();
   });

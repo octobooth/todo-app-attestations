@@ -3,12 +3,13 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
 import TaskListConfig from './TaskListConfig';
 
-// Mock the tag context
-const mockTags = ['work', 'personal', 'urgent', 'home'];
+// Mock variables to control the mocked context values
+let mockTagsValue = ['work', 'personal', 'urgent', 'home'];
 
+// Mock the tag context
 vi.mock('../../../context/TagContext', () => ({
   useTagContext: () => ({
-    tags: mockTags
+    tags: mockTagsValue
   })
 }));
 
@@ -27,6 +28,8 @@ describe('TaskListConfig Component', () => {
   beforeEach(() => {
     mockOnSave.mockClear();
     mockOnCancel.mockClear();
+    // Reset the mock tags to the default value before each test
+    mockTagsValue = ['work', 'personal', 'urgent', 'home'];
   });
 
   test('renders the task list config correctly', () => {
@@ -189,9 +192,8 @@ describe('TaskListConfig Component', () => {
   });
 
   test('displays message when no tags are available', () => {
-    vi.spyOn(require('../../../context/TagContext'), 'useTagContext').mockReturnValue({
-      tags: []
-    });
+    // Set mock tags to an empty array for this test
+    mockTagsValue = [];
 
     render(
       <TaskListConfig 

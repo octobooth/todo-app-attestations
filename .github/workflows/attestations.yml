@@ -16,7 +16,7 @@ jobs:
     steps:
       # Checkout the repository
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       # Install dependencies
       - name: Install dependencies
@@ -24,7 +24,7 @@ jobs:
 
       # Generate SBOM from the dependencies (scanning the workspace directory)
       - name: Generate SBOM
-        uses: anchore/sbom-action@v0
+        uses: anchore/sbom-action@9f7302141466aa6482940f15371237e9d9f4c34a
         with:
           upload-artifact: false
           upload-release-assets: false
@@ -46,14 +46,14 @@ jobs:
       #     subject-path: "dist.tar.gz"
 
       # Complete an attestation of the SBOM and the build
-      - uses: actions/attest-sbom@v1
+      - uses: actions/attest-sbom@115c3be05ff3974bcbd596578934b3f9ce39bf68
         with:
           subject-path: 'dist.tar.gz'
           sbom-path: 'sbom.spdx.json'
 
       # Publish the SBOM (Zipped per https://github.com/actions/upload-artifact?tab=readme-ov-file#zip-archives)
       - name: Publish the SBOM
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: sbom
           path: sbom.spdx.json
@@ -66,7 +66,7 @@ jobs:
       #    path: dist.tar.gz
           
       - name: "Deploy to GitHub Pages"
-        uses: actions/upload-pages-artifact@v3.0.1
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
         with:
           path: dist
 
@@ -90,4 +90,4 @@ jobs:
    steps:
      - name: Deploy to GitHub Pages
        id: deployment
-       uses: actions/deploy-pages@v4 # or specific "vX.X.X" version tag for this action
+       uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # or specific "vX.X.X" version tag for this action
