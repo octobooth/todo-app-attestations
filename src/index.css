@@ -2,16 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f8fafc;
+  color: #334155;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+/* Custom utility classes */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.task-transition {
+  transition: all 0.2s ease-in-out;
+}
+
+.task-transition:hover {
+  transform: translateY(-2px);
+}
+
+.checkbox-container {
+  @apply relative flex items-center;
+}
+
+.checkbox-container input[type="checkbox"] {
+  @apply appearance-none h-5 w-5 rounded-md border border-gray-300 checked:bg-primary-500 
+  checked:border-transparent focus:outline-none transition-colors duration-200 ease-in-out;
+}
+
+.checkbox-container .checkmark {
+  @apply absolute left-[3px] top-[5px] opacity-0 transition-opacity pointer-events-none;
+}
+
+.checkbox-container input[type="checkbox"]:checked ~ .checkmark {
+  @apply opacity-100;
 }
