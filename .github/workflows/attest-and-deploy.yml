@@ -37,9 +37,11 @@ jobs:
           format: 'spdx-json'
           output-file: 'sbom.spdx.json'
 
-      # Build the site using the build script in package.json
-      - name: Build site
+      # Build the site using the build script in package.json with data hydration enabled
+      - name: Build site with data hydration
         run: npm run build
+        env:
+          VITE_ENABLE_DATA_HYDRATION: 'true'
 
       # Package the build into a tarball so it can be easily verified
       - name: Package the build

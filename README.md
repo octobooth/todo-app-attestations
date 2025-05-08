@@ -53,9 +53,25 @@ A task management application that allows users to create, organize, and filter 
 ### Available Scripts
 
 - `npm start` - Start the development server
-- `npm test` - Run tests with Vitest
+- `npm start:hydrated` - Start the development server with data hydration enabled
 - `npm run build` - Build for production
+- `npm run build:hydrated` - Build for production with data hydration enabled
+- `npm run build:clean` - Build for production with data hydration explicitly disabled
 - `npm run preview` - Preview the production build locally
+- `npm run preview:hydrated` - Preview the production build with data hydration enabled
+- `npm test` - Run tests with Vitest
+
+### Data Hydration
+
+The application supports pre-populating the app with sample data through an optional hydration process:
+
+- Sample data is defined in `src/data/initialData.json`
+- Hydration can be enabled/disabled using the `VITE_ENABLE_DATA_HYDRATION` environment variable
+- Use the convenience scripts for development with hydration:
+  - `npm run start:hydrated` - Development with sample data
+  - `npm run build:hydrated` - Production build with sample data
+  - `npm run build:clean` - Production build without sample data
+- GitHub Actions deployment automatically enables hydration for the production build
 
 ## Architecture
 

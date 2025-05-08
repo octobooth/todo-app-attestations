@@ -34,8 +34,8 @@ export const DataHydrationService = {
    * @returns {boolean}
    */
   shouldHydrate: () => {
-    // You can add logic here to check if hydration should occur
-    // For example, checking if it's the first time the app is run
-    return true;
+    // Check if the VITE_ENABLE_DATA_HYDRATION environment variable is set to 'true'
+    // This allows controlling hydration via build configuration or environment
+    return import.meta.env.VITE_ENABLE_DATA_HYDRATION === 'true';
   }
 };
